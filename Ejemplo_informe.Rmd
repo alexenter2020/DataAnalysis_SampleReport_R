@@ -1,0 +1,55 @@
+---
+title: "Palmer Penguins"
+author: "Alexenter"
+date: "2025-05-12"
+output:
+  pdf_document: default
+---
+
+```{r Setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+### Carga de librerías generales
+```{r Loading Packages}
+library(ggplot2)
+```
+
+## Resumen
+
+Este informe contiene los hallazgos principales como resultado de un análisis de datos hecho a un estudio científico realizado a tres especies de pingüinos en el archipiélago Palmer, en la Antártida. 
+
+## Introducción
+
+En el archipiélago Palmer se realizó una investigación de la cual resultó un conjunto de datos de pingüinos que se utiliza para medir las relaciones entre diferentes características físicas de estas aves con respecto a su sexo y la isla donde dentro del archipiélago. 
+
+Este análisis es importante porque permitirá determinar si factores como el geográfico y específicamente la topografía afectan el crecimiento de los pingüinos, y de existir una relación, se podrá utilizar como base para una investigación más profunda que tienda a determinar las posibles causas u orígenes de dichas relaciones. 
+
+## Análisis
+
+Los datos utilizados en este análisis se obtuvieron del conjunto de datos incluidos con el lenguaje R y denominado palmerpenguins, datos recopilados originalmente por el **Dr. Kristen Morgan** y la Estación Palmer en la Antártida.
+
+#### Carga de librería-conjunto de datos
+```{r Librerías y Datos}
+library(palmerpenguins)
+library(dplyr)
+sample_n(penguins, 10) # Muestra 10 registros al azar
+```
+
+Específicamente, dentro de este análisis, se quería conocer el crecimiento de las aves en comparación con su masa corporal, diferenciando esta relación en cada sexo, y clasificándolos por la isla donde se tomó la muestra.
+
+```{r Visualización, echo=FALSE}
+ggplot(data = penguins) + 
+  geom_point(mapping = aes(x=flipper_length_mm, y = body_mass_g, color = sex)) + 
+  facet_wrap(~island) + 
+  labs(title = "Palmer Penguins: Body mass vs. Flipper Length",
+       x = "Flipper Length (mm)",
+       y = "Body Mass (g)") + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## Conclusiones
+
+- Tanto en la isla Torgersen como Dream, hay similitudes claramente identificadas mediante los gráficos, en cuanto al tamaño y masa corporal de los pingüinos machos y hembras, siendo los machos quienes tienen un tamaño mayor de sus aletas, pero nunca superando los 210 mm de longitud. En cuanto a su masa corporal, nunca superan los 4800 g. 
+
+- En la isla Biscoe, es evidente que el crecimiento tanto de machos como de hembras es mucho mayor, ya que las hembras pueden llegar hasta 225 mm en cuanto a longitud de la aleta, y 5200 g de masa corporal, mientras que los machos llegan a 230 mm de longitud de aleta y sobrepasan los 6000 g de peso. 
