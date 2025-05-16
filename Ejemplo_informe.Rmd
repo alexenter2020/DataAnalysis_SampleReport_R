@@ -2,8 +2,7 @@
 title: "Palmer Penguins"
 author: "Alexenter"
 date: "2025-05-12"
-output:
-  pdf_document: default
+output: html_document
 ---
 
 ```{r Setup, include=FALSE}
@@ -13,6 +12,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ### Carga de librerías generales
 ```{r Loading Packages}
 library(ggplot2)
+library(dplyr)
 ```
 
 ## Resumen
@@ -32,15 +32,14 @@ Los datos utilizados en este análisis se obtuvieron del conjunto de datos inclu
 #### Carga de librería-conjunto de datos
 ```{r Librerías y Datos}
 library(palmerpenguins)
-library(dplyr)
-sample_n(penguins, 10) # Muestra 10 registros al azar
+sample_n(penguins, 10) # Muestra 10 registros al azar en cada ejecución
 ```
 
 Específicamente, dentro de este análisis, se quería conocer el crecimiento de las aves en comparación con su masa corporal, diferenciando esta relación en cada sexo, y clasificándolos por la isla donde se tomó la muestra.
 
 ```{r Visualización, echo=FALSE}
 ggplot(data = penguins) + 
-  geom_point(mapping = aes(x=flipper_length_mm, y = body_mass_g, color = sex)) + 
+  geom_point(mapping = aes(x=flipper_length_mm, y = body_mass_g, color = sex), na.rm = TRUE) + 
   facet_wrap(~island) + 
   labs(title = "Palmer Penguins: Body mass vs. Flipper Length",
        x = "Flipper Length (mm)",
@@ -48,8 +47,22 @@ ggplot(data = penguins) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+Al observar estas gráficas, se quiso investigar más a fondo las características geográficas y topográficas de las islas, y se encontró en diferentes medios digitales y mapas satélitales los siguientes aspectos que serían la causa potencial de la marcada diferencia enntre la isla Biscoe y las otras dos: Dream y Torgersen. Se encontró que en la **Isla Biscoe** existe el siguiente entorno:
+
+* Topografía y Hábitat: Ubicada en el extremo sur de la isla Anvers, Biscoe Point ofrece terrenos bajos y relativamente planos, con pendientes suaves y suelos libres de hielo durante el verano. Estas condiciones proporcionan amplias áreas adecuadas para la nidificación de pingüinos.
+
+* Acceso al Mar y Alimentación: La proximidad al cañón submarino Palmer Deep facilita el acceso a zonas ricas en kril, principal alimento de los pingüinos.
+
+* Clima y Cobertura Nival: Las condiciones climáticas más templadas y secas favorecen un deshielo temprano, reduciendo la acumulación de nieve en las zonas de anidación.
+
+* Actividad Humana: La isla presenta una baja perturbación humana, al no albergar estaciones permanentes ni recibir tráfico turístico significativo. 
+
+* Impacto en los Pingüinos: Estas condiciones permiten un acceso temprano y constante a fuentes alimenticias cercanas, reduciendo la mortalidad de crías y mejorando el éxito reproductivo. 
+
 ## Conclusiones
 
 - Tanto en la isla Torgersen como Dream, hay similitudes claramente identificadas mediante los gráficos, en cuanto al tamaño y masa corporal de los pingüinos machos y hembras, siendo los machos quienes tienen un tamaño mayor de sus aletas, pero nunca superando los 210 mm de longitud. En cuanto a su masa corporal, nunca superan los 4800 g. 
 
 - En la isla Biscoe, es evidente que el crecimiento tanto de machos como de hembras es mucho mayor, ya que las hembras pueden llegar hasta 225 mm en cuanto a longitud de la aleta, y 5200 g de masa corporal, mientras que los machos llegan a 230 mm de longitud de aleta y sobrepasan los 6000 g de peso. 
+
+- La topografía relativamente plana, el acceso fácil a la alimentación, clima más templado y sin hielo durante más tiempo y la poca o nula actividad humana hacen que los pingüinos en la isla Biscoe se desarrollen fisiológicamente mejor.
